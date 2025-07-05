@@ -15,12 +15,10 @@ import (
 // 5    9.854090990/6.1230463725       10.60542743
 // 6    3.724532667/2.3143165878       4.008513915
 
-func GetH3Cell(lat, lng float64) (h3.Cell, error) {
-	return h3.LatLngToCell(h3.NewLatLng(lat, lng), 5)
-}
+const INVALID_H3_CELL = ""
 
 func GetH3CellString(lat, lng float64) (string, error) {
-	h3Cell, err := GetH3Cell(lat, lng)
+	h3Cell, err := getH3Cell(lat, lng)
 	if err != nil {
 		return "", nil
 	}
@@ -40,7 +38,7 @@ func GetDiskByOriginH3Cell(origin int64) ([]int64, error) {
 }
 
 func getDiskByLatLngRadius(lat, lng float64) ([]int64, error) {
-	origin, err := GetH3Cell(lat, lng)
+	origin, err := getH3Cell(lat, lng)
 	if err != nil {
 		return nil, err
 	}
@@ -53,4 +51,8 @@ func getDiskByLatLngRadius(lat, lng float64) ([]int64, error) {
 		ret[i] = int64(cell)
 	}
 	return ret, nil
+}
+
+func getH3Cell(lat, lng float64) (h3.Cell, error) {
+	return h3.LatLngToCell(h3.NewLatLng(lat, lng), 5)
 }

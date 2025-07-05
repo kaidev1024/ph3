@@ -17,7 +17,7 @@ import (
 
 const INVALID_H3_CELL = ""
 
-func GetH3CellString(lat, lng float64) (string, error) {
+func GetH3Cell(lat, lng float64) (string, error) {
 	h3Cell, err := getH3Cell(lat, lng)
 	if err != nil {
 		return "", nil

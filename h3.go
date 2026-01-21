@@ -16,8 +16,15 @@ import (
 // 6    3.724532667/2.3143165878       4.008513915
 
 const INVALID_H3_CELL = ""
+const MIN_LATITUDE = -90.0
+const MAX_LATITUDE = 90.0
+const MIN_LONGITUDE = -180.0
+const MAX_LONGITUDE = 180.0
 
 func GetH3Cell(lat, lng float64) (string, error) {
+	if lat < MIN_LATITUDE || lat > MAX_LATITUDE || lng < MIN_LONGITUDE || lng > MAX_LONGITUDE {
+		return INVALID_H3_CELL, nil
+	}
 	h3Cell, err := getH3Cell(lat, lng)
 	if err != nil {
 		return "", nil
